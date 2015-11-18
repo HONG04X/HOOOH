@@ -1,0 +1,36 @@
+## Hello!This is a matrix inversion function, 
+## which has the function of cache
+
+## This function will get four information about the matrix:
+## set,get,setInverse and getInverse
+
+makeCacheMatrix <- function(x = matrix()) {
+		n<-NULL
+		set<-function(y){
+			x<<-y
+			n<<-NULL
+		}
+		get<-function() x
+		setInverse<-function(inverse) n<<-inverse
+		getInverse<-function() n
+		list(set=set,get=get,setInverse=setInverse,getInverse=getInverse)
+}
+
+
+## This function will use the information of the previous 
+## function to determine whether the result of the matrix is cached. 
+## If the matrix result cache, then directly output cached results
+## Otherwise, to calculate the inverse of the matrix.
+
+cacheSolve <- function(x, ...) {
+		## Return a matrix that is the inverse of 'x'
+		m<-x$getInverse()
+		if(!is.null(m)){
+			message("getting cached data")
+			return(m)
+		}
+		data<-x$get()
+		m<-solve(data,...)
+		x$setInverse(m)
+		m
+}
